@@ -1,0 +1,136 @@
+# CMS 1 — L'offre
+# Source : Wix Services.csv (10 lignes) + missions lues dans les projets + ce que Nicolas a dit.
+# Les IDs wix_* gardent le lien avec l'export. On enrichit, on ne jette pas.
+
+version: 1
+updated: 2026-09-14
+
+# Recoupe des vocaux reçus le 14 septembre 2026 : aucune nouvelle famille ni page fille.
+# Eklo : calendrier avant shooting, figurants, monuments des stories, print et suivi social par Élise.
+# Cafeincup : devantures dessinées, compte commun, social 2019–2022 puis reprise 2024–2025.
+# La réflexion sur l’offre à la reprise inclut Nicolas ; aucune refonte achevée n’est revendiquée.
+# La Princière : identité, façade, matériaux, pots et stand réalisés par Élise ; oursons encore à imprimer.
+# GQ x Mouton Cadet : création culinaire, préparation et live par Élise ; crédits photo à retrouver.
+# Le Balancier : préparation de l’ouverture, influence locale et tracé adapté à l’impression ; page conservée.
+
+categories:
+  - slug: strategie
+    nom: Stratégie de marque
+    pitch: Avant de dessiner. Positionnement, plateforme, nom, ton — le socle qui rend le reste cohérent.
+    vient_de: [c640d198-512c-44d5-9504-cb44afb89e77]
+    sous:
+      - slug: positionnement
+        nom: Positionnement
+        note: Cafeincup — réflexion sur l’offre et le positionnement, réunions et enseignements transmis lors de la reprise 2024–2025. Élise, avec Nicolas pour les rendez-vous et la réflexion ; veille aussi documentée côté Zohra. La refonte envisagée n’a pas abouti.
+      - slug: plateforme-de-marque
+        nom: Plateforme de marque
+        note: Plus grosse recherche autour de vous (2 400 / mois). Guide à republier.
+      - slug: naming
+        nom: Naming
+      - slug: architecture-de-marque
+        nom: Architecture de marque
+        note: Preuve Chaff — holding vs marque B2C, déclinaison ingrédients B2B. Etche Verde — une marque, deux gammes, deux palettes (épicerie vert/rouge · bien-être bleu/verts). Pattern / Silk — écoles vs entreprise B2B.
+      - slug: ton-de-voix
+        nom: Ton de voix
+      - slug: brand-book
+        nom: Brand book
+
+  - slug: creation
+    nom: Création
+    pitch: Ce qu'on voit et ce qu'on touche. Identité, packaging, print, espace, présentations.
+    vient_de:
+      - 1cbcaecc-3077-4f0b-b405-6a4ac9bc22f1 # Identité visuelle
+      - 79430524-c842-4524-9506-d337772a4eec # Packaging
+      - f09e4255-b630-45be-acb8-e3386783af4d # Print premium
+      - cfbc6875-87bb-4966-b54b-cd2fea0b3901 # Présentations
+    sous:
+      - slug: identite-visuelle
+        nom: Identité visuelle
+        note: Preuve Albret — maison de 1971 rachetée, logo travaillé en gravure. « Moderniser » ne voulait pas dire « rendre moderne ». Jusqu’au lambrequin et à l’autorisation de mairie. Plouton — aucune proposition n’allait ; le blason est dans les archives d’Elise. Trois barres = solidité, pas les trois pôles. Aussi Baronnies (gravure), Pattern, GMT, Goonj.
+      - slug: direction-artistique
+        nom: Direction artistique
+        note: La Princière — Élise tient la cohérence du signe, des couleurs, des pots, de la façade et du stand, avec conseil auprès de l’architecte d’intérieur. Eklo et Cafeincup — direction des contenus sous identité existante, pas refonte du logo.
+      - slug: iconographie
+        nom: Iconographie & illustration
+        note: Eklo — monuments des villes dessinés par Élise pour les stories dans la charte existante. Cafeincup — devantures de chaque café dessinées pour les stories. La Princière — soleil et pont-couronne ; illustrations des oursons validées, pas encore imprimées. Mouvement — estampe abeille. Etche Verde — illustrations + pictos jour/nuit des huiles. Yamas — amphores. GMT — pictos site. Justed — pictos de marque. Silk — icônes métier. Baronnies — gravure ferme + olivier. Connect'Oi — pictos catégories e-shop.
+      - slug: packaging
+        nom: Packaging
+        note: Preuve Chaff, LFM, Mouvement, Etche Verde (piment chez leur imprimeur ; boîtes CBD Packly ; liseré AOP). La Princière — trois formats de pots ; illustrations des oursons validées, impression annoncée fin septembre 2026. Ô Naturel — étiquette + boîte, logo déjà là. Baronnies — boîte + étiquette, 5 pantones.
+      - slug: print
+        nom: Print & documents
+        note: Preuve Pattern — templates BAT et maquette. Mouvement — PLV nid d’abeille (Sacrée PLV). LFM — PLV pharmacie. Etche Verde — flyer A6, gamme bien-être, allégations tenues. Yamas — vitrine 2022 (dump Wix). Polyextract — carton A5 + présentoir de comptoir (Sacrée PLV, gabarit aussi LFM). Albret — cartes, tampon, signatures. Hysope — toiles de stand. Beryola — cartes recettes A6. LFI — carte, panneau, affiche. Plouton — cartes Bulc, chemises d’audience ; SECIB ne gère pas Liter.
+      - slug: presentations
+        nom: Présentations & pitch
+        note: Preuve Dassault — PowerPoint d’entreprise 2026 (Figma → PPTX), photo au centre, peu de mots, mantra « Protéger chaque horizon » ; encore en validation interne. LFM — decks cannabis thérapeutique (V2/V3) + présentation B2B. Goonj — template pitch / devis. Silk — slides à Jill.
+      - slug: scenographie
+        nom: Scénographie & espace
+        note: Dassault Mérignac (A, M, H, posée août 2026 ; Rewolf chef de projet auprès d’Arcalie), façade Albret, plaque Plouton posée (Duvigneau, quais de Bordeaux). La Princière — façade et stand de gare installés ; visibilité, circulation, lambrequin et accès technique. Aménagement intérieur porté par l’architecte du client, Élise conseille la cohérence des matériaux.
+
+  - slug: image-son
+    nom: Image & son
+    pitch: Photos de marque, direction de shooting, identité sonore. Le studio musique est ici.
+    vient_de:
+      - c176e951-70be-4971-a25e-734ef8dce581 # Photographie
+    sous:
+      - slug: photographie
+        nom: Photographie de marque
+        note: Preuve Pattern — shootings équipe (portraits, groupe) et intérieur / showroom, pas de produit. Monaloa — lifestyle textile + looks produit, six ou sept saisons 2024–25, par Elise ; identité et print retirés (Rewolf ne les a pas faits). Makers Mark — reportage event. Le Balancier — food / lieu. LFI — shooting agence. Roxel — reportage event défense (via Dassault). Etche Verde — quelques packshots offerts, pas un shooting.
+      - slug: direction-shooting
+        nom: Direction de shooting
+        note: Preuve Monaloa — Chartrons, deux amies, looks nommés ; six ou sept saisons. Méthode Elise — moodboard de poses préparé en amont, montré aux modèles avant le shooting, gardé sous la main pendant pour guider ceux qui bloquent. Le naturel arrive en fin de journée, il faut prévoir le temps. Eklo — calendrier éditorial avant le shooting, préparation avec la direction et la personne chargée des relations presse, personnel de l’hôtel comme figurants.
+      - slug: branding-sonore
+        nom: Branding sonore
+        note: Preuve Chaff — 7 versions de scoring pub + prises de voix ads.
+
+  - slug: digital
+    nom: Digital
+    pitch: Interfaces, sites, apps, visibilité, croissance. Un site qui charge et qui se trouve. Un outil qui sert.
+    vient_de:
+      - 87d58c7d-4341-4d8e-b719-a11558192f40 # UX UI
+      - 8e123ff3-d95e-48b2-bb28-75d9ffea2d94 # Web
+      - 64de46b6-7bff-4a7b-a489-09327c8da2c0 # SEO
+    sous:
+      - slug: ux-ui
+        nom: UX & UI
+        note: Preuve Musée du Vin — parcours de réservation des expériences (visite, dégustation, événements, cartes cadeaux).
+      - slug: sites-web
+        nom: Sites web
+        note: Preuve Pattern — Squarespace au lancement, Wix Studio un an plus tard (collections CMS, une page par sport, webhooks des formulaires vers Slack). Parti chez Jill en 2025 quand le devis en ligne a dû alimenter leur logiciel de production — Wix Studio ne tenait plus. Yamas — Wix Studio resto (réservation + traiteur), transféré au client. Plouton — WordPress → Wix Studio, 500+ articles, 301, plus one-page outre-mer (TypeScript / Vercel). GMT (en cours). Meilleur pho Bordeaux. Goonj — one-page, code ailleurs. Justed — Figma, Shopify ailleurs. Silk — one-page Rewolf, site officiel Jill. Musée du Vin — Wix Studio, transféré au client. Albret. LFI. Corinne Granger — galerie + e-shop. Connect'Oi — sliders + ops boutique, site ailleurs.
+      - slug: seo
+        nom: SEO
+        note: Preuve Yamas — stratégie au devis + choix du domaine. Plouton — 500+ articles migrés, ×2 de clics organiques (GSC), E-E-A-T collé aux affaires ; AI Overviews ensuite. Musée du Vin — audit balisage, GSC, indexation.
+      - slug: growth
+        nom: Growth & social
+        note: Preuve Chaff — Meta, Google Ads, UGC, KissKiss, RP. Présent aussi chez Cafeincup, Yamas, Silk (premiers posts IG). Eklo et Le Balancier — community management réel tenu par Elise ; Le Balancier ajoute l'influence sans budget média (influenceurs invités à manger, jamais payés). Pattern — RS au lancement seulement ; ils n'ont jamais fait d'Ads (SEO + commerciaux). Musée du Vin — deux fiches Google (musée / resto). LFI — landing Pinel pour Nomad. Beryola — KissKiss. Connect'Oi — ops promo e-shop + ads.
+      - slug: mesure
+        nom: Mesure
+        note: Ajouté — Cooked. Analytics hachait trop ; on trace jusqu’à l’appel ou le formulaire, page par page. Julien ne l’ouvre pas — Nicolas pilote. Né pour Plouton. Sans bandeau cookies.
+      - slug: applications
+        nom: Applications
+        note: Ajouté — Untunnel, app iPhone. N'existait pas dans le CMS Wix Services.
+
+  - slug: contenu
+    nom: Contenu
+    pitch: Les mots. Pages, articles, brand content — alignés au ton, utiles à Google.
+    vient_de:
+      - 9e8c216e-5a99-41bb-8a44-ff19fea1165e
+    sous:
+      - slug: copywriting
+        nom: Copywriting
+        note: Preuve Musée du Vin — pages musée, offres, privatisation B2B. Pattern — mantra « Habillez vos victoires ». Dassault — « Protéger chaque horizon » (slide, why). LFI — copies pub, campagne print.
+      - slug: editorial-seo
+        nom: Éditorial SEO
+        note: Preuve Pattern — pages catalogue (titles, meta, FAQ) + blog d'acquisition « quel textile pour quelle activité ». Première utilisation de l'IA chez Rewolf, fin 2022, sur une partie des articles. Plouton — affaires jugées = presse + plaidoirie, Julien publie ; ressources / notions à part.
+      - slug: brand-content
+        nom: Brand content
+        note: GQ × Mouton Cadet — Élise conçoit les recettes et la vaisselle, cuisine à Bordeaux puis intervient en direct au Lutetia. Photo et captation par des tiers ; crédits et références exactes des cuvées à recouper. Eklo, Cafeincup et Le Balancier — sujets, rédaction et contenus sociaux réguliers par Élise.
+
+# Ce qu'on a fusionné (pour s'y retrouver)
+fusions:
+  - "Packaging + Print premium → Création (même chaîne, jusqu'à l'imprimeur)"
+  - "UX/UI + Web + SEO → Digital (même chantier site)"
+  - "Identité + Présentations → Création (langage visuel, y compris slides et pitch)"
+  - "Social media (dans les projets, pas dans Services) → Digital / Growth"
+  - "Scénographie (Dassault, Albret, Princière) → Création / Espace"
+  - "Branding sonore (dit par Nicolas, pas dans Wix) → Image & son"
+  - "Mesure (Cooked) + Applications (Untunnel) → Digital — pas dans Wix Services"

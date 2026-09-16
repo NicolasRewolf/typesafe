@@ -1,1 +1,1 @@
-# typeface
+# typesafe

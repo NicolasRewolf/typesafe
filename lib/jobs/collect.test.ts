@@ -52,4 +52,32 @@ describe("collect", () => {
     );
     expect(ranked[0]?.title).toBe("Product Designer");
   });
+
+  it("keeps about twenty offers, including a weaker match", () => {
+    const pool = [
+      ...Array.from({ length: 22 }, (_, index) =>
+        offer({
+          id: `design-${index}`,
+          title: `Product Designer ${index}`,
+          description: "Figma, marque, produit digital",
+          url: `https://example.com/design-${index}`,
+        }),
+      ),
+      offer({
+        id: "shop",
+        title: "Vendeur",
+        description: "Magasin de vêtements",
+        url: "https://example.com/shop",
+      }),
+      offer({
+        id: "cad",
+        title: "Dessinateur industriel",
+        description: "CAO mécanique",
+        url: "https://example.com/cad",
+      }),
+    ];
+    const ranked = rankOffers(pool, "product designer");
+    expect(ranked).toHaveLength(20);
+    expect(ranked.some((item) => item.title === "Vendeur")).toBe(true);
+  });
 });

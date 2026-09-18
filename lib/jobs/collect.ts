@@ -40,6 +40,7 @@ const KEYWORDS = [
 ];
 
 const TARGET_COUNT = 20;
+const STRONG_SLOTS = 16;
 
 export function queriesFor(lookingFor: string): string[] {
   const typed = lookingFor.trim();
@@ -74,7 +75,7 @@ function tokensFor(lookingFor: string): string[] {
 
 export function rankOffers(offers: JobOffer[], lookingFor: string): JobOffer[] {
   const tokens = tokensFor(lookingFor);
-  return [...offers]
+  const scored = [...offers]
     .map((offer) => {
       const haystack = `${offer.title} ${offer.description}`.toLowerCase();
       const score = tokens.reduce(
@@ -83,9 +84,19 @@ export function rankOffers(offers: JobOffer[], lookingFor: string): JobOffer[] {
       );
       return { offer, score };
     })
-    .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.offer)
-    .slice(0, TARGET_COUNT);
+    .sort((a, b) => b.score - a.score);
+
+  if (scored.length <= TARGET_COUNT)
+    return scored.map((entry) => entry.offer);
+
+  const strong = scored.slice(0, STRONG_SLOTS);
+  const leftover = scored.slice(STRONG_SLOTS);
+  const fillers = leftover
+    .slice()
+    .sort((a, b) => a.score - b.score)
+    .slice(0, TARGET_COUNT - strong.length);
+
+  return [...strong, ...fillers].map((entry) => entry.offer);
 }
 
 export async function collectOffers(lookingFor: string): Promise<{
@@ -116,7 +127,7 @@ export async function collectOffers(lookingFor: string): Promise<{
 
   if (hasIndeed) {
     try {
-      const fromIndeed = await searchIndeed(queries);
+      const fromIndeed = await searchIndeed(lookingFor);
       batches.push(...fromIndeed);
       if (fromIndeed.length) labels.push("Indeed");
     } catch {

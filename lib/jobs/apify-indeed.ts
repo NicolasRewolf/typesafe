@@ -4,6 +4,11 @@ import type { JobOffer } from "@/lib/jobs/types";
 const ACTOR =
   "https://api.apify.com/v2/acts/misceres~indeed-scraper/run-sync-get-dataset-items";
 
+export const DEFAULT_INDEED_POSITION =
+  "product designer OR directeur artistique OR product manager OR consultant digital";
+
+const MAX_ITEMS = 20;
+
 interface IndeedItem {
   id?: string;
   positionName?: string;
@@ -41,9 +46,28 @@ function toOffer(raw: IndeedItem): JobOffer | null {
   };
 }
 
-function startUrl(query: string): { url: string } {
-  const params = new URLSearchParams({ q: query, l: "Bordeaux" });
+export function indeedPosition(lookingFor: string): string {
+  return lookingFor.trim() || DEFAULT_INDEED_POSITION;
+}
+
+function startUrl(position: string): { url: string } {
+  const params = new URLSearchParams({ q: position, l: "Bordeaux" });
   return { url: `https://fr.indeed.com/jobs?${params.toString()}` };
+}
+
+function itemsFrom(payload: unknown): unknown[] {
+  if (Array.isArray(payload)) return payload;
+  return [];
+}
+
+export function offersFrom(payload: unknown): JobOffer[] {
+  const offers: JobOffer[] = [];
+  for (const item of itemsFrom(payload)) {
+    if (!item || typeof item !== "object") continue;
+    const offer = toOffer(item as IndeedItem);
+    if (offer) offers.push(offer);
+  }
+  return offers;
 }
 
 async function runActor(token: string, body: Record<string, unknown>): Promise<unknown> {
@@ -63,59 +87,39 @@ async function runActor(token: string, body: Record<string, unknown>): Promise<u
   return response.json();
 }
 
-function offersFrom(payload: unknown): JobOffer[] {
-  if (!Array.isArray(payload)) return [];
-  const offers: JobOffer[] = [];
-  for (const item of payload) {
-    if (!item || typeof item !== "object") continue;
-    const offer = toOffer(item as IndeedItem);
-    if (offer) offers.push(offer);
-  }
-  return offers;
+function countrySearchBody(position: string): Record<string, unknown> {
+  return {
+    country: "FR",
+    location: "Bordeaux",
+    position,
+    maxItemsPerSearch: MAX_ITEMS,
+    saveOnlyUniqueItems: true,
+  };
 }
 
-async function searchOneByCountry(token: string, position: string): Promise<JobOffer[]> {
-  return offersFrom(
-    await runActor(token, {
-      country: "FR",
-      location: "Bordeaux",
-      position,
-      maxItemsPerSearch: 8,
-      saveOnlyUniqueItems: true,
-    }),
-  );
+function startUrlsBody(position: string): Record<string, unknown> {
+  return {
+    startUrls: [startUrl(position)],
+    maxItemsPerSearch: MAX_ITEMS,
+    saveOnlyUniqueItems: true,
+  };
 }
 
-async function searchByStartUrls(token: string, queries: string[]): Promise<JobOffer[]> {
-  return offersFrom(
-    await runActor(token, {
-      startUrls: queries.map(startUrl),
-      maxItemsPerSearch: 8,
-      saveOnlyUniqueItems: true,
-    }),
-  );
-}
-
-export async function searchIndeed(queries: string[]): Promise<JobOffer[]> {
+export async function searchIndeed(lookingFor: string): Promise<JobOffer[]> {
   const token = process.env.APIFY_TOKEN;
   if (!token) return [];
 
-  const uniqueQueries = [...new Set(queries.map((query) => query.trim()).filter(Boolean))];
-  if (uniqueQueries.length === 0) return [];
-
-  const offers: JobOffer[] = [];
-  for (const position of uniqueQueries) {
-    try {
-      offers.push(...(await searchOneByCountry(token, position)));
-    } catch {
-      continue;
-    }
-  }
-
-  if (offers.length) return offers;
+  const position = indeedPosition(lookingFor);
 
   try {
-    return await searchByStartUrls(token, uniqueQueries);
+    const offers = offersFrom(await runActor(token, countrySearchBody(position)));
+    if (offers.length) return offers;
+  } catch {
+    // Fallback below: a single startUrls run.
+  }
+
+  try {
+    return offersFrom(await runActor(token, startUrlsBody(position)));
   } catch {
     throw new Error("indeed-search");
   }

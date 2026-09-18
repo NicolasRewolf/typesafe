@@ -13,6 +13,7 @@ interface IndeedItem {
   jobType?: string | string[] | null;
   description?: string;
   url?: string;
+  error?: string;
 }
 
 function jobTypeLabel(value: IndeedItem["jobType"]): string {
@@ -21,6 +22,7 @@ function jobTypeLabel(value: IndeedItem["jobType"]): string {
 }
 
 function toOffer(raw: IndeedItem): JobOffer | null {
+  if (raw.error) return null;
   const title = raw.positionName?.trim();
   const url = raw.url?.trim();
   if (!title || !url) return null;
@@ -62,35 +64,26 @@ async function runActor(token: string, body: Record<string, unknown>): Promise<u
 }
 
 function offersFrom(payload: unknown): JobOffer[] {
-  if (!Array.isArray(payload)) throw new Error("indeed-search");
+  if (!Array.isArray(payload)) return [];
   const offers: JobOffer[] = [];
   for (const item of payload) {
     if (!item || typeof item !== "object") continue;
-    if ("error" in item) continue;
     const offer = toOffer(item as IndeedItem);
     if (offer) offers.push(offer);
   }
   return offers;
 }
 
-async function searchByCountry(token: string, queries: string[]): Promise<JobOffer[]> {
-  const offers: JobOffer[] = [];
-  for (let index = 0; index < queries.length; index += 2) {
-    const slice = queries.slice(index, index + 2);
-    const batches = await Promise.all(
-      slice.map((position) =>
-        runActor(token, {
-          country: "FR",
-          location: "Bordeaux",
-          position,
-          maxItemsPerSearch: 8,
-          saveOnlyUniqueItems: true,
-        }),
-      ),
-    );
-    offers.push(...batches.flatMap(offersFrom));
-  }
-  return offers;
+async function searchOneByCountry(token: string, position: string): Promise<JobOffer[]> {
+  return offersFrom(
+    await runActor(token, {
+      country: "FR",
+      location: "Bordeaux",
+      position,
+      maxItemsPerSearch: 8,
+      saveOnlyUniqueItems: true,
+    }),
+  );
 }
 
 async function searchByStartUrls(token: string, queries: string[]): Promise<JobOffer[]> {
@@ -110,12 +103,20 @@ export async function searchIndeed(queries: string[]): Promise<JobOffer[]> {
   const uniqueQueries = [...new Set(queries.map((query) => query.trim()).filter(Boolean))];
   if (uniqueQueries.length === 0) return [];
 
-  try {
-    const byCountry = await searchByCountry(token, uniqueQueries);
-    if (byCountry.length) return byCountry;
-  } catch {
-    // France as a country code can fail; the French Indeed URLs are the fallback.
+  const offers: JobOffer[] = [];
+  for (const position of uniqueQueries) {
+    try {
+      offers.push(...(await searchOneByCountry(token, position)));
+    } catch {
+      continue;
+    }
   }
 
-  return searchByStartUrls(token, uniqueQueries);
+  if (offers.length) return offers;
+
+  try {
+    return await searchByStartUrls(token, uniqueQueries);
+  } catch {
+    throw new Error("indeed-search");
+  }
 }

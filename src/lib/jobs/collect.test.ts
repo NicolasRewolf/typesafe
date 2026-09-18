@@ -32,6 +32,18 @@ describe("collect", () => {
     expect(unique).toHaveLength(1);
   });
 
+  it("keeps two Indeed jobs that share the viewjob path", () => {
+    const unique = dedupeOffers([
+      offer({
+        id: "a",
+        url: "https://fr.indeed.com/viewjob?jk=aaa&utm_source=share",
+      }),
+      offer({ id: "b", url: "https://fr.indeed.com/viewjob?jk=bbb" }),
+      offer({ id: "c", url: "https://fr.indeed.com/viewjob?jk=aaa&from=serp" }),
+    ]);
+    expect(unique).toHaveLength(2);
+  });
+
   it("keeps a product designer ahead of an unrelated shop job", () => {
     const ranked = rankOffers(
       [

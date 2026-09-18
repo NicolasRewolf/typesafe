@@ -48,9 +48,25 @@ export function queriesFor(lookingFor: string): string[] {
   return DEFAULT_QUERIES.slice(0, 4);
 }
 
+const TRACKING_PARAM = /^(utm|ref|fccid|from|fromjk|tk|xkcb)/i;
+
 export function offerKey(offer: JobOffer): string {
-  if (offer.url) return offer.url.replace(/[?#].*$/, "").toLowerCase();
-  return `${offer.title}|${offer.company}`.toLowerCase();
+  if (!offer.url) return `${offer.title}|${offer.company}`.toLowerCase();
+
+  try {
+    const parsed = new URL(offer.url);
+    const jobId = parsed.searchParams.get("jk") || parsed.searchParams.get("vjk");
+    if (jobId)
+      return `${parsed.origin}${parsed.pathname}?jk=${jobId}`.toLowerCase();
+
+    parsed.hash = "";
+    for (const key of [...parsed.searchParams.keys()]) {
+      if (TRACKING_PARAM.test(key)) parsed.searchParams.delete(key);
+    }
+    return parsed.toString().toLowerCase();
+  } catch {
+    return offer.url.replace(/#.*$/, "").toLowerCase();
+  }
 }
 
 export function dedupeOffers(offers: JobOffer[]): JobOffer[] {

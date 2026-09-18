@@ -14,6 +14,8 @@ describe("indeedPosition", () => {
   it("combines the default trades when the field is empty", () => {
     expect(indeedPosition("")).toBe(DEFAULT_INDEED_POSITION);
     expect(indeedPosition("   ")).toBe(DEFAULT_INDEED_POSITION);
+    expect(DEFAULT_INDEED_POSITION).toContain('"product designer"');
+    expect(DEFAULT_INDEED_POSITION).toContain(" OR ");
   });
 });
 

@@ -5,7 +5,7 @@ const ACTOR =
   "https://api.apify.com/v2/acts/misceres~indeed-scraper/run-sync-get-dataset-items";
 
 export const DEFAULT_INDEED_POSITION =
-  "product designer OR directeur artistique OR product manager OR consultant digital";
+  '"product designer" OR "directeur artistique" OR "product manager" OR "consultant digital"';
 
 const MAX_ITEMS = 20;
 

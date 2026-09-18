@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
 
-import "./globals.css";
+import "./tampon.css";
 
 const body = Figtree({
   variable: "--font-body",
@@ -20,19 +20,17 @@ export const metadata: Metadata = {
   description: "Les offres de Bordeaux, tamponnées oui, non, ou à voir.",
 };
 
-export default function RootLayout({
+export default function ScanLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${body.variable} ${stamp.variable} h-full`}>
-      <body className="min-h-full">
-        <a className="skip" href="#bureau">
-          Aller au bureau
-        </a>
-        {children}
-      </body>
-    </html>
+    <div className={`tampon ${body.variable} ${stamp.variable}`}>
+      <a className="skip" href="#bureau">
+        Aller au bureau
+      </a>
+      {children}
+    </div>
   );
 }
